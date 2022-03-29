@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
+
 import { AppContext } from "./DataProvider";
 
 const AppContainer = () => {
   const [apps, setApps] = useState([]);
   const { allApps } = useContext(AppContext);
   let minPlaceHolders = 4;
-
+  console.log("apps page", allApps);
   useEffect(() => {
+    console.log("render");
     setApps(allApps.filter((item) => item.added === true));
   }, [allApps]);
 
@@ -33,14 +33,14 @@ const AppContainer = () => {
         {apps.map((app) => {
           return (
             <Grid item xs={12} md={6} key={app.id}>
-              <div>{app.label} </div>
+              {app.label}
             </Grid>
           );
         })}
-        {placeHolderArray.map((placeholder) => {
+        {placeHolderArray.map((placeholder, index) => {
           return (
-            <Grid item xs={12} md={6} key={placeholder.id}>
-              <div>{placeholder.label}</div>
+            <Grid item xs={12} md={6} key={index}>
+              {placeholder.label}
             </Grid>
           );
         })}

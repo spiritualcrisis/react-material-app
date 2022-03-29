@@ -16,22 +16,17 @@ const AppContextProvider = (props) => {
   ];
   const [allApps, setAllApps] = useState(initialState);
   const addApps = (id) => {
-    allApps.map((app) => {
-      return app.id === id ? (app.added = true) : null;
+    const modifiedApps = allApps.map((app) => {
+      return app.id === id ? { ...app, added: true } : app;
     });
-    setAllApps(allApps);
+    setAllApps(modifiedApps);
   };
-  //   useEffect(() => {
-  //     addApps();
-  //   }, [addApps]);
 
-  // Remove tasks
+  // Remove apps
   const removeApps = (id) => {
     setAllApps(allApps.filter((app) => app.id !== id));
   };
-  //   useEffect(() => {
-  //     setAllApps(initialState);
-  //   }, [initialState]);
+
   return (
     <AppContext.Provider value={{ allApps, setAllApps, addApps, removeApps }}>
       {props.children}
