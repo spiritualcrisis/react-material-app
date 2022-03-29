@@ -24,7 +24,7 @@ export default function Search() {
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
-        id="controllable-states-demo"
+        id="size-small-filled-multi"
         options={allApps}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="" />}
