@@ -4,8 +4,11 @@ import Grid from "@mui/material/Grid";
 
 import { AppContext } from "./DataProvider";
 import CustomCard from "./card";
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 const AppContainer = () => {
+  //@todo Save in the CONSTANT FILE
   let placeHolderArray = [
     { label: "add an app", icon: "plus" },
     { label: "add an app", icon: "plus" },
@@ -15,22 +18,18 @@ const AppContainer = () => {
   const [apps, setApps] = useState([]);
   const { allApps } = useContext(AppContext);
   const [placeHolders, setPlaceHolders] = useState(placeHolderArray);
-  let minPlaceHolders = 4;
 
   useEffect(() => {
+    let minPlaceHolders = 4;
     setApps(allApps.filter((item) => item.added === true));
-    if (apps.length < minPlaceHolders) {
-      minPlaceHolders = minPlaceHolders - apps.length;
-      console.log(
-        apps,
-        minPlaceHolders,
-        placeHolderArray.slice(0, minPlaceHolders)
-      );
-      setPlaceHolders(placeHolderArray.slice(minPlaceHolders));
+    let addedApps = allApps.filter((item) => item.added === true);
+    console.log(apps.length);
+    if (addedApps.length <= minPlaceHolders) {
+      minPlaceHolders = minPlaceHolders - addedApps.length;
+      setPlaceHolders(placeHolderArray.slice(0, minPlaceHolders));
     } else {
       setPlaceHolders([]);
     }
-    console.log(apps.length, placeHolderArray, minPlaceHolders);
   }, [allApps]);
 
   return (
@@ -39,7 +38,7 @@ const AppContainer = () => {
         {apps.map((app) => {
           return (
             <Grid item xs={12} md={6} key={app.id}>
-              <CustomCard cardData={app} />
+              <CustomCard cardData={app} type="apps" />
             </Grid>
           );
         })}
@@ -47,11 +46,14 @@ const AppContainer = () => {
           placeHolders.map((placeholder, index) => {
             return (
               <Grid item xs={12} md={6} key={index}>
-                {placeholder.label}
+                <CustomCard cardData={placeholder} type="placeholders" />
               </Grid>
             );
           })}
       </Grid>
+      <Box mt={4} sx={{ textAlign: "center" }}>
+        <Typography>{apps.length} Products added</Typography>
+      </Box>
     </div>
   );
 };

@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import { Icon } from "../icons/appIcons";
 import { Box } from "@mui/system";
 import { AppContext } from "./DataProvider";
+import { Link } from "@mui/material";
 
-const CustomCard = ({ cardData }) => {
+const CustomCard = ({ cardData, type }) => {
   const { removeApps } = useContext(AppContext);
   return (
     <div>
@@ -17,16 +16,19 @@ const CustomCard = ({ cardData }) => {
           <Box sx={{ mx: "auto", width: 100 }}>
             <Icon className="icons" name={cardData.icon} />
             <h4>{cardData.label}</h4>
+            {type === "apps" ? (
+              <Link
+                onClick={() => removeApps(cardData.id)}
+                component="button"
+                sx={{ marginTop: "10px" }}
+              >
+                remove
+              </Link>
+            ) : (
+              ""
+            )}
           </Box>
         </CardContent>
-        <CardActions>
-          <Button
-            onClick={() => removeApps(cardData.id)}
-            className="text-sm text-red-500"
-          >
-            remove
-          </Button>
-        </CardActions>
       </Card>
     </div>
   );
